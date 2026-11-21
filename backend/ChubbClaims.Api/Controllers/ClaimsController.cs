@@ -70,6 +70,62 @@ public class ClaimsController : ControllerBase
         return Ok(claims);
     }
 
+    [HttpPut("{id:guid}/status")]
+    public async Task<IActionResult> UpdateClaimStatus(
+        Guid id,
+        [FromBody] UpdateClaimStatusRequest request)
+    {
+        var claim = await _context.Claims.FindAsync(id);
+
+        if (claim == null)
+        {
+            return NotFound();
+        }
+
+        if (!IsValidStatusTransition(claim.Status, request.Status))
+        {
+            return BadRequest(new
+            {
+                message = $"Cannot change claim status from {claim.Status} to {request.Status}."
+            });
+        }
+
+        claim.Status = request.Status;
+        claim.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(claim);
+    }
+
+    private bool IsValidStatusTransition(
+        ClaimStatus currentStatus,
+        ClaimStatus newStatus)
+    {
+        return currentStatus switch
+        {
+            ClaimStatus.Submitted =>
+                newStatus == ClaimStatus.UnderReview,
+
+            ClaimStatus.UnderReview =>
+                newStatus == ClaimStatus.AdditionalInformationRequired
+                || newStatus == ClaimStatus.Approved
+                || newStatus == ClaimStatus.Rejected,
+
+            ClaimStatus.AdditionalInformationRequired =>
+                newStatus == ClaimStatus.UnderReview,
+
+            ClaimStatus.Approved =>
+                newStatus == ClaimStatus.Settled,
+
+            ClaimStatus.Rejected => false,
+
+            ClaimStatus.Settled => false,
+
+            _ => false
+        };
+    }
+
     private string GenerateClaimNumber(ClaimType claimType)
     {
         var prefix = claimType == ClaimType.Motor ? "MOT" : "PRO";
