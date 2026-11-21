@@ -1,4 +1,3 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -19,6 +18,16 @@ export interface Claim {
   updatedAt: string | null;
 }
 
+export interface CreateClaimRequest {
+  claimantName: string;
+  claimantEmail: string;
+  claimType: number;
+  incidentDate: string;
+  incidentLocation: string;
+  description: string;
+  estimatedAmount: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -34,5 +43,9 @@ export class ClaimsService {
 
   getClaimById(id: string): Observable<Claim> {
     return this.http.get<Claim>(`${this.apiUrl}/${id}`);
+  }
+
+  createClaim(claim: CreateClaimRequest): Observable<Claim> {
+    return this.http.post<Claim>(this.apiUrl, claim);
   }
 }

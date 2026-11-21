@@ -1,0 +1,174 @@
+.submit-claim-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+.form-header {
+  margin-bottom: 30px;
+}
+
+.form-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+  margin: 0 0 10px;
+}
+
+.form-header p {
+  color: #777;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Form Sections */
+.form-section {
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.form-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin: 0 0 24px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #333;
+  background-color: #ffffff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #c8102e;
+  box-shadow: 0 0 0 3px rgba(200, 16, 46, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #a5a5a5;
+}
+
+/* Validation */
+.field-error {
+  display: block;
+  margin-top: 7px;
+  color: #c8102e;
+  font-size: 12px;
+}
+
+.form-group input.ng-invalid.ng-touched,
+.form-group select.ng-invalid.ng-touched,
+.form-group textarea.ng-invalid.ng-touched {
+  border-color: #c8102e;
+}
+
+/* Messages */
+.success-message {
+  padding: 16px 20px;
+  background: #eaf7ee;
+  color: #237a3b;
+  border: 1px solid #c8e8d0;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.error-message {
+  padding: 16px 20px;
+  background: #fff0f0;
+  color: #b42318;
+  border: 1px solid #f5c2c2;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+/* Buttons */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.submit-button {
+  background: #c8102e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: #a80d25;
+  transform: translateY(-1px);
+}
+
+.submit-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .submit-claim-container {
+    padding: 20px 16px;
+  }
+
+  .form-section {
+    padding: 20px;
+  }
+
+  .form-header h1 {
+    font-size: 24px;
+  }
+
+  .submit-button {
+    width: 100%;
+  }
+}

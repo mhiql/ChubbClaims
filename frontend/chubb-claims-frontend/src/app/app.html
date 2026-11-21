@@ -1,235 +1,369 @@
+@if (showSubmitClaim) {
 
-<div class="app-container">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="brand-icon">C</div>
-      <div>
-        <h2>Chubb</h2>
-        <span>Claims Portal</span>
-      </div>
-    </div>
+  <!-- Submit Claim Page -->
+  <div class="app-container">
 
-    <div class="nav-section">
-      <p class="nav-label">MAIN MENU</p>
-
-      <a class="nav-item active">
-        <span class="icon">▦</span>
-        Dashboard
-      </a>
-
-      <a class="nav-item">
-        <span class="icon">▤</span>
-        All Claims
-      </a>
-
-      <a class="nav-item">
-        <span class="icon">＋</span>
-        Submit a Claim
-      </a>
-    </div>
-
-    <div class="sidebar-bottom">
-      <div class="user-profile">
-        <div class="avatar">HT</div>
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">C</div>
         <div>
-          <strong>Haiqal Tan</strong>
-          <small>Claims Officer</small>
+          <h2>Chubb</h2>
+          <span>Claims Portal</span>
         </div>
       </div>
-    </div>
-  </aside>
 
-  <main class="main-content">
-    <header class="topbar">
-      <div>
-        <span class="breadcrumb">Claims Management / Dashboard</span>
-      </div>
+      <div class="nav-section">
+        <p class="nav-label">MAIN MENU</p>
 
-      <div class="topbar-right">
-        <button class="notification-button">♧</button>
-        <div class="avatar">HT</div>
-      </div>
-    </header>
+        <button class="nav-item" (click)="backToDashboard()">
+          <span class="icon">▦</span>
+          Dashboard
+        </button>
 
-    <section class="page-content">
-      <div class="page-heading">
-        <div>
-          <h1>Claims Dashboard</h1>
-          <p>Overview of claims activity and performance.</p>
-        </div>
+        <button class="nav-item">
+          <span class="icon">▤</span>
+          All Claims
+        </button>
 
-        <button class="primary-button">
-          + Submit New Claim
+        <button class="nav-item active">
+          <span class="icon">＋</span>
+          Submit a Claim
         </button>
       </div>
 
-      @if (loading) {
-        <div class="content-card loading-message">
-          Loading claims...
+      <div class="sidebar-bottom">
+        <div class="user-profile">
+          <div class="avatar">HT</div>
+          <div>
+            <strong>Haiqal Tan</strong>
+            <small>Claims Officer</small>
+          </div>
         </div>
-      }
+      </div>
+    </aside>
 
-      @if (errorMessage) {
-        <div class="content-card error-message">
-          {{ errorMessage }}
-          <button class="secondary-button" (click)="loadClaims()">
-            Retry
+    <main class="main-content">
+
+      <header class="topbar">
+        <div>
+          <span class="breadcrumb">
+            Claims Management / Submit a Claim
+          </span>
+        </div>
+
+        <div class="topbar-right">
+          <button class="notification-button">♧</button>
+          <div class="avatar">HT</div>
+        </div>
+      </header>
+
+      <section class="page-content">
+
+        <button
+          class="secondary-button"
+          (click)="backToDashboard()"
+          style="margin-bottom: 20px;"
+        >
+          ← Back to Dashboard
+        </button>
+
+        <app-submit-claim></app-submit-claim>
+
+      </section>
+
+    </main>
+
+  </div>
+
+} @else {
+
+  <!-- Dashboard Page -->
+  <div class="app-container">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">C</div>
+        <div>
+          <h2>Chubb</h2>
+          <span>Claims Portal</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-label">MAIN MENU</p>
+
+        <button class="nav-item active">
+          <span class="icon">▦</span>
+          Dashboard
+        </button>
+
+        <button class="nav-item">
+          <span class="icon">▤</span>
+          All Claims
+        </button>
+
+        <button
+          class="nav-item"
+          (click)="openSubmitClaim()"
+        >
+          <span class="icon">＋</span>
+          Submit a Claim
+        </button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="user-profile">
+          <div class="avatar">HT</div>
+          <div>
+            <strong>Haiqal Tan</strong>
+            <small>Claims Officer</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <header class="topbar">
+        <div>
+          <span class="breadcrumb">
+            Claims Management / Dashboard
+          </span>
+        </div>
+
+        <div class="topbar-right">
+          <button class="notification-button">♧</button>
+          <div class="avatar">HT</div>
+        </div>
+      </header>
+
+      <section class="page-content">
+
+        <div class="page-heading">
+          <div>
+            <h1>Claims Dashboard</h1>
+            <p>Overview of claims activity and performance.</p>
+          </div>
+
+          <button
+            class="primary-button"
+            (click)="openSubmitClaim()"
+          >
+            + Submit New Claim
           </button>
         </div>
-      }
 
-      @if (!loading && !errorMessage) {
-        <div class="stats-grid">
-          <div class="stat-card">
-            <div class="stat-top">
-              <span>Total Claims</span>
-              <span class="stat-icon blue">▤</span>
-            </div>
-            <h2>{{ totalClaims }}</h2>
-            <p>All claims received</p>
+        @if (loading) {
+          <div class="content-card loading-message">
+            Loading claims...
           </div>
+        }
 
-          <div class="stat-card">
-            <div class="stat-top">
-              <span>Pending Review</span>
-              <span class="stat-icon orange">◷</span>
-            </div>
-            <h2>{{ pendingReview }}</h2>
-            <p>Awaiting assessment</p>
+        @if (errorMessage) {
+          <div class="content-card error-message">
+            {{ errorMessage }}
+
+            <button
+              class="secondary-button"
+              (click)="loadClaims()"
+            >
+              Retry
+            </button>
           </div>
+        }
 
-          <div class="stat-card">
-            <div class="stat-top">
-              <span>Approved</span>
-              <span class="stat-icon green">✓</span>
-            </div>
-            <h2>{{ approvedClaims }}</h2>
-            <p>Claims approved</p>
-          </div>
+        @if (!loading && !errorMessage) {
 
-          <div class="stat-card">
-            <div class="stat-top">
-              <span>Rejected</span>
-              <span class="stat-icon red">×</span>
-            </div>
-            <h2>{{ rejectedClaims }}</h2>
-            <p>Claims rejected</p>
-          </div>
-        </div>
+          <!-- Statistics -->
+          <div class="stats-grid">
 
-        <div class="content-card">
-          <div class="card-header">
-            <div>
-              <h2>Recent Claims</h2>
-              <p>Latest claims submitted to the system</p>
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Total Claims</span>
+                <span class="stat-icon blue">▤</span>
+              </div>
+
+              <h2>{{ totalClaims }}</h2>
+              <p>All claims received</p>
             </div>
 
-            <button class="secondary-button">View All</button>
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Pending Review</span>
+                <span class="stat-icon orange">◷</span>
+              </div>
+
+              <h2>{{ pendingReview }}</h2>
+              <p>Awaiting assessment</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Approved</span>
+                <span class="stat-icon green">✓</span>
+              </div>
+
+              <h2>{{ approvedClaims }}</h2>
+              <p>Claims approved</p>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-top">
+                <span>Rejected</span>
+                <span class="stat-icon red">×</span>
+              </div>
+
+              <h2>{{ rejectedClaims }}</h2>
+              <p>Claims rejected</p>
+            </div>
+
           </div>
 
-          <div class="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>Claim Number</th>
-                  <th>Claimant</th>
-                  <th>Type</th>
-                  <th>Incident Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
+          <!-- Recent Claims -->
+          <div class="content-card">
 
-              <tbody>
-                @for (claim of claims; track claim.id) {
+            <div class="card-header">
+              <div>
+                <h2>Recent Claims</h2>
+                <p>Latest claims submitted to the system</p>
+              </div>
+
+              <button class="secondary-button">
+                View All
+              </button>
+            </div>
+
+            <div class="table-container">
+              <table>
+
+                <thead>
                   <tr>
-                    <td class="claim-number">
-                      {{ claim.claimNumber }}
-                    </td>
-
-                    <td>{{ claim.claimantName }}</td>
-
-                    <td>{{ getClaimType(claim.claimType) }}</td>
-
-                    <td>
-                      {{ claim.incidentDate | date:'dd MMM yyyy' }}
-                    </td>
-
-                    <td>
-                      {{ claim.estimatedAmount | currency:'MYR':'RM ':'1.2-2' }}
-                    </td>
-
-                    <td>
-                      <span
-                        class="status"
-                        [ngClass]="getStatusClass(claim.status)">
-                        {{ getClaimStatus(claim.status) }}
-                      </span>
-                    </td>
+                    <th>Claim Number</th>
+                    <th>Claimant</th>
+                    <th>Type</th>
+                    <th>Incident Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
                   </tr>
-                } @empty {
-                  <tr>
-                    <td colspan="6" class="empty-message">
-                      No claims found.
-                    </td>
-                  </tr>
-                }
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+
+                  @for (claim of claims; track claim.id) {
+
+                    <tr>
+                      <td class="claim-number">
+                        {{ claim.claimNumber }}
+                      </td>
+
+                      <td>{{ claim.claimantName }}</td>
+
+                      <td>
+                        {{ getClaimType(claim.claimType) }}
+                      </td>
+
+                      <td>
+                        {{ claim.incidentDate | date:'dd MMM yyyy' }}
+                      </td>
+
+                      <td>
+                        {{ claim.estimatedAmount | currency:'MYR':'RM ':'1.2-2' }}
+                      </td>
+
+                      <td>
+                        <span
+                          class="status"
+                          [ngClass]="getStatusClass(claim.status)"
+                        >
+                          {{ getClaimStatus(claim.status) }}
+                        </span>
+                      </td>
+                    </tr>
+
+                  } @empty {
+
+                    <tr>
+                      <td colspan="6" class="empty-message">
+                        No claims found.
+                      </td>
+                    </tr>
+
+                  }
+
+                </tbody>
+
+              </table>
+            </div>
+
           </div>
-        </div>
 
-        <div class="content-card">
-          <div class="card-header">
-            <div>
-              <h2>Claims Status Overview</h2>
-              <p>Distribution of claims by status</p>
+          <!-- Status Overview -->
+          <div class="content-card">
+
+            <div class="card-header">
+              <div>
+                <h2>Claims Status Overview</h2>
+                <p>Distribution of claims by status</p>
+              </div>
             </div>
+
+            <div class="status-overview">
+
+              <div class="status-overview-item">
+                <div class="overview-label">
+                  <span class="dot submitted-dot"></span>
+                  Submitted
+                </div>
+
+                <strong>{{ submittedClaims }}</strong>
+              </div>
+
+              <div class="status-overview-item">
+                <div class="overview-label">
+                  <span class="dot review-dot"></span>
+                  Under Review
+                </div>
+
+                <strong>{{ pendingReview }}</strong>
+              </div>
+
+              <div class="status-overview-item">
+                <div class="overview-label">
+                  <span class="dot approved-dot"></span>
+                  Approved
+                </div>
+
+                <strong>{{ approvedClaims }}</strong>
+              </div>
+
+              <div class="status-overview-item">
+                <div class="overview-label">
+                  <span class="dot rejected-dot"></span>
+                  Rejected
+                </div>
+
+                <strong>{{ rejectedClaims }}</strong>
+              </div>
+
+              <div class="status-overview-item">
+                <div class="overview-label">
+                  <span class="dot settled-dot"></span>
+                  Settled
+                </div>
+
+                <strong>{{ settledClaims }}</strong>
+              </div>
+
+            </div>
+
           </div>
 
-          <div class="status-overview">
-            <div class="status-overview-item">
-              <div class="overview-label">
-                <span class="dot submitted-dot"></span>
-                Submitted
-              </div>
-              <strong>{{ submittedClaims }}</strong>
-            </div>
+        }
 
-            <div class="status-overview-item">
-              <div class="overview-label">
-                <span class="dot review-dot"></span>
-                Under Review
-              </div>
-              <strong>{{ pendingReview }}</strong>
-            </div>
+      </section>
 
-            <div class="status-overview-item">
-              <div class="overview-label">
-                <span class="dot approved-dot"></span>
-                Approved
-              </div>
-              <strong>{{ approvedClaims }}</strong>
-            </div>
+    </main>
 
-            <div class="status-overview-item">
-              <div class="overview-label">
-                <span class="dot rejected-dot"></span>
-                Rejected
-              </div>
-              <strong>{{ rejectedClaims }}</strong>
-            </div>
+  </div>
 
-            <div class="status-overview-item">
-              <div class="overview-label">
-                <span class="dot settled-dot"></span>
-                Settled
-              </div>
-              <strong>{{ settledClaims }}</strong>
-            </div>
-          </div>
-        </div>
-      }
-    </section>
-  </main>
-</div>
+}

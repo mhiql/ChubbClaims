@@ -1,0 +1,191 @@
+<div class="submit-claim-container">
+
+  <div class="form-header">
+    <h1>Submit a Claim</h1>
+    <p>Provide the details of your incident to submit a new insurance claim.</p>
+  </div>
+
+  <!-- Success Message -->
+  @if (successMessage) {
+    <div class="success-message">
+      {{ successMessage }}
+    </div>
+  }
+
+  <!-- Error Message -->
+  @if (errorMessage) {
+    <div class="error-message">
+      {{ errorMessage }}
+    </div>
+  }
+
+  <form [formGroup]="claimForm" (ngSubmit)="submitClaim()">
+
+    <!-- Claimant Information -->
+    <section class="form-section">
+      <h2>Claimant Information</h2>
+
+      <div class="form-group">
+        <label for="claimantName">Full Name *</label>
+
+        <input
+          id="claimantName"
+          type="text"
+          formControlName="claimantName"
+          placeholder="Enter your full name"
+        />
+
+        @if (claimForm.controls.claimantName.touched &&
+              claimForm.controls.claimantName.invalid) {
+          <small class="field-error">
+            @if (claimForm.controls.claimantName.hasError('required')) {
+              Full name is required.
+            }
+            @if (claimForm.controls.claimantName.hasError('maxlength')) {
+              Name cannot exceed 100 characters.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="claimantEmail">Email Address *</label>
+
+        <input
+          id="claimantEmail"
+          type="email"
+          formControlName="claimantEmail"
+          placeholder="example@email.com"
+        />
+
+        @if (claimForm.controls.claimantEmail.touched &&
+              claimForm.controls.claimantEmail.invalid) {
+          <small class="field-error">
+            @if (claimForm.controls.claimantEmail.hasError('required')) {
+              Email address is required.
+            }
+            @if (claimForm.controls.claimantEmail.hasError('email')) {
+              Please enter a valid email address.
+            }
+          </small>
+        }
+      </div>
+    </section>
+
+    <!-- Incident Information -->
+    <section class="form-section">
+      <h2>Incident Information</h2>
+
+      <div class="form-group">
+        <label for="claimType">Claim Type *</label>
+
+        <select id="claimType" formControlName="claimType">
+          <option [ngValue]="0">Motor Insurance</option>
+          <option [ngValue]="1">Property Insurance</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="incidentDate">Incident Date *</label>
+
+        <input
+          id="incidentDate"
+          type="date"
+          formControlName="incidentDate"
+        />
+
+        @if (claimForm.controls.incidentDate.touched &&
+              claimForm.controls.incidentDate.invalid) {
+          <small class="field-error">
+            Incident date is required.
+          </small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="incidentLocation">Incident Location *</label>
+
+        <input
+          id="incidentLocation"
+          type="text"
+          formControlName="incidentLocation"
+          placeholder="Enter incident location"
+        />
+
+        @if (claimForm.controls.incidentLocation.touched &&
+              claimForm.controls.incidentLocation.invalid) {
+          <small class="field-error">
+            @if (claimForm.controls.incidentLocation.hasError('required')) {
+              Incident location is required.
+            }
+            @if (claimForm.controls.incidentLocation.hasError('maxlength')) {
+              Location cannot exceed 200 characters.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="description">Incident Description *</label>
+
+        <textarea
+          id="description"
+          formControlName="description"
+          rows="5"
+          placeholder="Describe what happened..."
+        ></textarea>
+
+        @if (claimForm.controls.description.touched &&
+              claimForm.controls.description.invalid) {
+          <small class="field-error">
+            @if (claimForm.controls.description.hasError('required')) {
+              Incident description is required.
+            }
+            @if (claimForm.controls.description.hasError('maxlength')) {
+              Description cannot exceed 2000 characters.
+            }
+          </small>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="estimatedAmount">Estimated Claim Amount (RM) *</label>
+
+        <input
+          id="estimatedAmount"
+          type="number"
+          formControlName="estimatedAmount"
+          min="0.01"
+          step="0.01"
+          placeholder="0.00"
+        />
+
+        @if (claimForm.controls.estimatedAmount.touched &&
+              claimForm.controls.estimatedAmount.invalid) {
+          <small class="field-error">
+            Please enter an amount greater than RM 0.
+          </small>
+        }
+      </div>
+    </section>
+
+    <!-- Form Actions -->
+    <div class="form-actions">
+
+      <button
+        type="submit"
+        class="submit-button"
+        [disabled]="submitting"
+      >
+        @if (submitting) {
+          Submitting...
+        } @else {
+          Submit Claim
+        }
+      </button>
+
+    </div>
+
+  </form>
+
+</div>

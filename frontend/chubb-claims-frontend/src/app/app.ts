@@ -1,12 +1,12 @@
-
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClaimsService, Claim } from './services/claims';
+import { SubmitClaim } from './pages/submit-claim/submit-claim';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SubmitClaim],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -16,6 +16,8 @@ export class App implements OnInit {
 
   loading = true;
   errorMessage = '';
+
+  showSubmitClaim = false;
 
   constructor(
     private claimsService: ClaimsService,
@@ -45,6 +47,15 @@ export class App implements OnInit {
         this.cdr.markForCheck();
       }
     });
+  }
+
+  openSubmitClaim(): void {
+    this.showSubmitClaim = true;
+  }
+
+  backToDashboard(): void {
+    this.showSubmitClaim = false;
+    this.loadClaims();
   }
 
   get totalClaims(): number {
