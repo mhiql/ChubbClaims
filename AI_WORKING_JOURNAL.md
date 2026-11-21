@@ -157,3 +157,34 @@ UTC timestamps are used for consistent time handling.
 ### Human Review
 Reviewed the properties and their purposes against the
 assessment requirements and initial domain design.
+
+## Claim API and Status Workflow
+
+### Implemented
+- Created claim submission endpoint (`POST /api/claims`).
+- Created endpoint to retrieve an individual claim (`GET /api/claims/{id}`).
+- Created endpoint to retrieve all claims (`GET /api/claims`).
+- Implemented claim status update endpoint (`PUT /api/claims/{id}/status`).
+- Added validation for allowed claim status transitions.
+- Updated `UpdatedAt` timestamp when a claim status changes.
+
+### Testing
+- Successfully submitted a claim and stored it in SQL Server.
+- Successfully retrieved individual claim details.
+- Successfully retrieved all claims.
+- Tested valid transitions:
+  - Submitted → UnderReview
+  - UnderReview → AdditionalInformationRequired
+  - AdditionalInformationRequired → UnderReview
+  - UnderReview → Approved
+  - Approved → Settled
+- Tested invalid transition:
+  - Approved → Rejected
+  - API correctly returned HTTP 400 Bad Request.
+
+### AI Assistance
+AI helped generate the status update endpoint and transition validation logic. I reviewed the implementation, integrated it into the existing controller, and tested the valid and invalid transitions using PowerShell HTTP requests.
+
+### Outcome
+The claim API and status workflow are functional, with persistence verified through SQL Server.
+
