@@ -1,4 +1,83 @@
-@if (showSubmitClaim) {
+@if (selectedClaimId) {
+
+  <!-- Claim Details Page -->
+  <div class="app-container">
+
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">C</div>
+        <div>
+          <h2>Chubb</h2>
+          <span>Claims Portal</span>
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <p class="nav-label">MAIN MENU</p>
+
+        <button class="nav-item" (click)="backFromClaimDetails()">
+          <span class="icon">▦</span>
+          Dashboard
+        </button>
+
+        <button class="nav-item active">
+          <span class="icon">▤</span>
+          All Claims
+        </button>
+
+        <button class="nav-item" (click)="openSubmitClaim()">
+          <span class="icon">＋</span>
+          Submit a Claim
+        </button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <div class="user-profile">
+          <div class="avatar">HT</div>
+          <div>
+            <strong>Haiqal Tan</strong>
+            <small>Claims Officer</small>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <header class="topbar">
+        <div>
+          <span class="breadcrumb">
+            Claims Management / All Claims / Claim Details
+          </span>
+        </div>
+
+        <div class="topbar-right">
+          <button class="notification-button">♧</button>
+          <div class="avatar">HT</div>
+        </div>
+      </header>
+
+      <section class="page-content">
+
+        <button
+          class="secondary-button"
+          (click)="backFromClaimDetails()"
+          style="margin-bottom: 20px;"
+        >
+          ← Back to Dashboard
+        </button>
+
+        <app-claim-details
+          [claimId]="selectedClaimId"
+        ></app-claim-details>
+
+      </section>
+
+    </main>
+
+  </div>
+
+} @else if (showSubmitClaim) {
 
   <!-- Submit Claim Page -->
   <div class="app-container">
@@ -253,7 +332,12 @@
 
                     <tr>
                       <td class="claim-number">
-                        {{ claim.claimNumber }}
+                        <button
+                          class="claim-link"
+                          (click)="openClaimDetails(claim.id)"
+                        >
+                          {{ claim.claimNumber }}
+                        </button>
                       </td>
 
                       <td>{{ claim.claimantName }}</td>

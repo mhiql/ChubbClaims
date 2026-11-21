@@ -1,0 +1,120 @@
+<div class="claim-details-container">
+
+  <!-- Loading -->
+  @if (loading) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Loading claim details...</p>
+    </div>
+  }
+
+  <!-- Error -->
+  @if (!loading && errorMessage) {
+    <div class="error-state">
+      <h3>Unable to Load Claim</h3>
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+
+  <!-- Claim Details -->
+  @if (!loading && claim) {
+
+    <!-- Header -->
+    <div class="details-header">
+      <div>
+        <p class="page-label">CLAIM DETAILS</p>
+        <h1>{{ claim.claimNumber }}</h1>
+        <p class="subtitle">
+          Submitted on {{ claim.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+        </p>
+      </div>
+
+      <span class="status-badge" [ngClass]="getStatusClass(claim.status)">
+        {{ getClaimStatus(claim.status) }}
+      </span>
+    </div>
+
+    <!-- Claimant Information -->
+    <section class="details-card">
+      <h2>Claimant Information</h2>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>Full Name</label>
+          <p>{{ claim.claimantName }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Email Address</label>
+          <p>{{ claim.claimantEmail }}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Incident Information -->
+    <section class="details-card">
+      <h2>Incident Information</h2>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>Claim Type</label>
+          <p>{{ getClaimType(claim.claimType) }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Incident Date</label>
+          <p>{{ claim.incidentDate | date:'dd MMM yyyy' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Incident Location</label>
+          <p>{{ claim.incidentLocation }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Estimated Claim Amount</label>
+          <p class="amount">
+            RM {{ claim.estimatedAmount | number:'1.2-2' }}
+          </p>
+        </div>
+      </div>
+
+      <div class="description-section">
+        <label>Incident Description</label>
+        <p>{{ claim.description }}</p>
+      </div>
+    </section>
+
+    <!-- Claim Processing Information -->
+    <section class="details-card">
+      <h2>Processing Information</h2>
+
+      <div class="details-grid">
+        <div class="detail-item">
+          <label>Current Status</label>
+          <p>
+            <span class="status-badge" [ngClass]="getStatusClass(claim.status)">
+              {{ getClaimStatus(claim.status) }}
+            </span>
+          </p>
+        </div>
+
+        <div class="detail-item">
+          <label>Assigned To</label>
+          <p>{{ claim.assignedTo || 'Not assigned' }}</p>
+        </div>
+
+        <div class="detail-item">
+          <label>Last Updated</label>
+          <p>
+            {{ claim.updatedAt
+              ? (claim.updatedAt | date:'dd MMM yyyy, hh:mm a')
+              : 'No updates yet'
+            }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+  }
+</div>

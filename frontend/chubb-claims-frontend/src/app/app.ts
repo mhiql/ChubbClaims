@@ -2,11 +2,12 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClaimsService, Claim } from './services/claims';
 import { SubmitClaim } from './pages/submit-claim/submit-claim';
+import { ClaimDetails } from './pages/claim-details/claim-details';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, SubmitClaim],
+  imports: [CommonModule, SubmitClaim, ClaimDetails],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -18,6 +19,7 @@ export class App implements OnInit {
   errorMessage = '';
 
   showSubmitClaim = false;
+  selectedClaimId: string | null = null;
 
   constructor(
     private claimsService: ClaimsService,
@@ -49,15 +51,33 @@ export class App implements OnInit {
     });
   }
 
+  // Open Submit Claim form
   openSubmitClaim(): void {
     this.showSubmitClaim = true;
+    this.selectedClaimId = null;
   }
 
+  // Return to dashboard from Submit Claim
   backToDashboard(): void {
+    this.showSubmitClaim = false;
+    this.selectedClaimId = null;
+    this.loadClaims();
+  }
+
+  // Open Claim Details page
+  openClaimDetails(claimId: string): void {
+    this.selectedClaimId = claimId;
+    this.showSubmitClaim = false;
+  }
+
+  // Return to dashboard from Claim Details
+  backFromClaimDetails(): void {
+    this.selectedClaimId = null;
     this.showSubmitClaim = false;
     this.loadClaims();
   }
 
+  // Dashboard statistics
   get totalClaims(): number {
     return this.claims.length;
   }
@@ -92,6 +112,7 @@ export class App implements OnInit {
     ).length;
   }
 
+  // Claim Type labels
   getClaimType(type: number): string {
     switch (type) {
       case 0:
@@ -103,6 +124,7 @@ export class App implements OnInit {
     }
   }
 
+  // Claim Status labels
   getClaimStatus(status: number): string {
     switch (status) {
       case 0:
@@ -122,6 +144,7 @@ export class App implements OnInit {
     }
   }
 
+  // CSS status classes
   getStatusClass(status: number): string {
     switch (status) {
       case 0:

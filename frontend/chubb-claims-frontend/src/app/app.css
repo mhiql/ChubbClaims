@@ -532,3 +532,49 @@ tbody tr:hover {
     font-size: 23px;
   }
 }
+
+.claim-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #c41230;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.claim-link:hover {
+  color: #8f0d23;
+  text-decoration: underline;
+}
+
+.claim-link:focus-visible {
+  outline: 2px solid #c41230;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.claim-link {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #c41230;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.claim-link:hover {
+  color: #8f0d23;
+  text-decoration: underline;
+}
+
+.claim-link:focus-visible {
+  outline: 2px solid #c41230;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
