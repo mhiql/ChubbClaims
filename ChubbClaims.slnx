@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/backend/">
+    <Project Path="backend/ChubbClaims.Api/ChubbClaims.Api.csproj" />
+  </Folder>
+</Solution>
