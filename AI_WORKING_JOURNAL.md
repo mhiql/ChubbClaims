@@ -128,3 +128,32 @@ Reviewed the proposed claim fields and lifecycle against
 the assessment requirements. This is an initial scope and
 may evolve as implementation progresses.
 
+## Entry 5 — Initial C# Domain Model
+
+### AI Assistance
+Used AI to implement the initial Claim domain model and
+the enums representing claim types and processing statuses.
+
+### Decision
+Created:
+- Claim entity
+- ClaimType enum
+- ClaimStatus enum
+
+The Claim entity includes claimant details, incident details,
+estimated financial exposure, claim status, assignment and
+audit timestamps.
+
+### Reasoning
+Enums provide a controlled set of claim types and statuses.
+The Claim model represents the core business entity and will
+be used by the API and database layers.
+
+Guid and ClaimNumber are separate because internal identifiers
+and user-facing references serve different purposes.
+
+UTC timestamps are used for consistent time handling.
+
+### Human Review
+Reviewed the properties and their purposes against the
+assessment requirements and initial domain design.
