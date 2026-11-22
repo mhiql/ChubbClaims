@@ -28,6 +28,10 @@ export interface CreateClaimRequest {
   estimatedAmount: number;
 }
 
+export interface UpdateClaimStatusRequest {
+  status: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -47,5 +51,15 @@ export class ClaimsService {
 
   createClaim(claim: CreateClaimRequest): Observable<Claim> {
     return this.http.post<Claim>(this.apiUrl, claim);
+  }
+
+  updateClaimStatus(
+    id: string,
+    request: UpdateClaimStatusRequest
+  ): Observable<Claim> {
+    return this.http.put<Claim>(
+      `${this.apiUrl}/${id}/status`,
+      request
+    );
   }
 }

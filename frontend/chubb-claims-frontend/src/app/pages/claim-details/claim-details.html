@@ -1,120 +1,263 @@
-<div class="claim-details-container">
+<!-- Loading -->
+<div *ngIf="loading" class="loading-container">
+  <div class="spinner"></div>
+  <p>Loading claim details...</p>
+</div>
 
-  <!-- Loading -->
-  @if (loading) {
-    <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Loading claim details...</p>
+<!-- Error -->
+<div *ngIf="!loading && errorMessage" class="error-container">
+  <p>{{ errorMessage }}</p>
+</div>
+
+<!-- Claim Details -->
+<div *ngIf="!loading && claim" class="claim-details-container">
+
+  <!-- Claim Header -->
+  <div class="claim-details-header">
+
+    <div>
+      <h2>{{ claim.claimNumber }}</h2>
+      <p class="claim-subtitle">
+        Claim details and processing information
+      </p>
     </div>
-  }
 
-  <!-- Error -->
-  @if (!loading && errorMessage) {
-    <div class="error-state">
-      <h3>Unable to Load Claim</h3>
-      <p>{{ errorMessage }}</p>
+    <span
+      class="status-badge"
+      [ngClass]="getStatusClass(claim.status)"
+    >
+      {{ getClaimStatus(claim.status) }}
+    </span>
+
+  </div>
+
+  <!-- Claimant Information -->
+  <div class="details-card">
+
+    <h3>Claimant Information</h3>
+
+    <div class="details-grid">
+
+      <div class="detail-item">
+        <label>Full Name</label>
+        <p>{{ claim.claimantName }}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Email Address</label>
+        <p>{{ claim.claimantEmail }}</p>
+      </div>
+
     </div>
-  }
 
-  <!-- Claim Details -->
-  @if (!loading && claim) {
+  </div>
 
-    <!-- Header -->
-    <div class="details-header">
-      <div>
-        <p class="page-label">CLAIM DETAILS</p>
-        <h1>{{ claim.claimNumber }}</h1>
-        <p class="subtitle">
-          Submitted on {{ claim.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+  <!-- Incident Information -->
+  <div class="details-card">
+
+    <h3>Incident Information</h3>
+
+    <div class="details-grid">
+
+      <div class="detail-item">
+        <label>Claim Type</label>
+        <p>{{ getClaimType(claim.claimType) }}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Incident Date</label>
+        <p>{{ claim.incidentDate | date:'dd MMM yyyy' }}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Incident Location</label>
+        <p>{{ claim.incidentLocation }}</p>
+      </div>
+
+      <div class="detail-item">
+        <label>Estimated Amount</label>
+        <p class="amount">
+          RM {{ claim.estimatedAmount | number:'1.2-2' }}
         </p>
       </div>
 
-      <span class="status-badge" [ngClass]="getStatusClass(claim.status)">
-        {{ getClaimStatus(claim.status) }}
-      </span>
     </div>
 
-    <!-- Claimant Information -->
-    <section class="details-card">
-      <h2>Claimant Information</h2>
+    <div class="description-section">
 
-      <div class="details-grid">
-        <div class="detail-item">
-          <label>Full Name</label>
-          <p>{{ claim.claimantName }}</p>
-        </div>
+      <label>Incident Description</label>
 
-        <div class="detail-item">
-          <label>Email Address</label>
-          <p>{{ claim.claimantEmail }}</p>
-        </div>
-      </div>
-    </section>
+      <p>{{ claim.description }}</p>
 
-    <!-- Incident Information -->
-    <section class="details-card">
-      <h2>Incident Information</h2>
+    </div>
 
-      <div class="details-grid">
-        <div class="detail-item">
-          <label>Claim Type</label>
-          <p>{{ getClaimType(claim.claimType) }}</p>
-        </div>
+  </div>
 
-        <div class="detail-item">
-          <label>Incident Date</label>
-          <p>{{ claim.incidentDate | date:'dd MMM yyyy' }}</p>
-        </div>
+  <!-- Processing Information -->
+  <div class="details-card">
 
-        <div class="detail-item">
-          <label>Incident Location</label>
-          <p>{{ claim.incidentLocation }}</p>
-        </div>
+    <h3>Processing Information</h3>
 
-        <div class="detail-item">
-          <label>Estimated Claim Amount</label>
-          <p class="amount">
-            RM {{ claim.estimatedAmount | number:'1.2-2' }}
-          </p>
-        </div>
+    <div class="details-grid">
+
+      <div class="detail-item">
+        <label>Current Status</label>
+
+        <span
+          class="status-badge"
+          [ngClass]="getStatusClass(claim.status)"
+        >
+          {{ getClaimStatus(claim.status) }}
+        </span>
+
       </div>
 
-      <div class="description-section">
-        <label>Incident Description</label>
-        <p>{{ claim.description }}</p>
+      <div class="detail-item">
+        <label>Assigned Staff</label>
+        <p>{{ claim.assignedTo || 'Not assigned' }}</p>
       </div>
-    </section>
 
-    <!-- Claim Processing Information -->
-    <section class="details-card">
-      <h2>Processing Information</h2>
+      <div class="detail-item">
+        <label>Submitted On</label>
+        <p>{{ claim.createdAt | date:'dd MMM yyyy, hh:mm a' }}</p>
+      </div>
 
-      <div class="details-grid">
-        <div class="detail-item">
-          <label>Current Status</label>
-          <p>
-            <span class="status-badge" [ngClass]="getStatusClass(claim.status)">
-              {{ getClaimStatus(claim.status) }}
-            </span>
-          </p>
-        </div>
-
-        <div class="detail-item">
-          <label>Assigned To</label>
-          <p>{{ claim.assignedTo || 'Not assigned' }}</p>
-        </div>
-
-        <div class="detail-item">
-          <label>Last Updated</label>
-          <p>
-            {{ claim.updatedAt
+      <div class="detail-item">
+        <label>Last Updated</label>
+        <p>
+          {{ claim.updatedAt
               ? (claim.updatedAt | date:'dd MMM yyyy, hh:mm a')
               : 'No updates yet'
-            }}
-          </p>
-        </div>
+          }}
+        </p>
       </div>
-    </section>
 
-  }
+    </div>
+
+  </div>
+
+  <!-- Status Management -->
+  <div class="details-card status-management-card">
+
+    <h3>Claim Actions</h3>
+
+    <p class="action-description">
+      Select an action to update the claim's processing status.
+    </p>
+
+    <!-- Success Message -->
+    <div
+      *ngIf="statusMessage"
+      class="status-success-message"
+    >
+      {{ statusMessage }}
+    </div>
+
+    <!-- Error Message -->
+    <div
+      *ngIf="statusError"
+      class="status-error-message"
+    >
+      {{ statusError }}
+    </div>
+
+    <!-- Updating -->
+    <div *ngIf="updatingStatus" class="status-updating">
+      Updating claim status...
+    </div>
+
+    <!-- Submitted -->
+    <div *ngIf="claim.status === 0" class="action-buttons">
+
+      <button
+        class="action-button primary"
+        [disabled]="updatingStatus"
+        (click)="changeStatus(1)"
+      >
+        Start Review
+      </button>
+
+    </div>
+
+    <!-- Under Review -->
+    <div *ngIf="claim.status === 1" class="action-buttons">
+
+      <button
+        class="action-button warning"
+        [disabled]="updatingStatus"
+        (click)="changeStatus(2)"
+      >
+        Request Additional Information
+      </button>
+
+      <button
+        class="action-button success"
+        [disabled]="updatingStatus"
+        (click)="changeStatus(3)"
+      >
+        Approve Claim
+      </button>
+
+      <button
+        class="action-button danger"
+        [disabled]="updatingStatus"
+        (click)="changeStatus(4)"
+      >
+        Reject Claim
+      </button>
+
+    </div>
+
+    <!-- Additional Information Required -->
+    <div
+      *ngIf="claim.status === 2"
+      class="action-buttons"
+    >
+
+      <button
+        class="action-button primary"
+        [disabled]="updatingStatus"
+        (click)="changeStatus(1)"
+      >
+        Resume Review
+      </button>
+
+    </div>
+
+    <!-- Approved -->
+    <div
+      *ngIf="claim.status === 3"
+      class="action-buttons"
+    >
+
+      <button
+        class="action-button success"
+        [disabled]="updatingStatus"
+        (click)="changeStatus(5)"
+      >
+        Mark as Settled
+      </button>
+
+    </div>
+
+    <!-- Rejected -->
+    <div *ngIf="claim.status === 4">
+
+      <p class="terminal-status-message">
+        This claim has been rejected. No further status actions are available.
+      </p>
+
+    </div>
+
+    <!-- Settled -->
+    <div *ngIf="claim.status === 5">
+
+      <p class="terminal-status-message">
+        This claim has been settled successfully. No further status actions are available.
+      </p>
+
+    </div>
+
+  </div>
+
 </div>
